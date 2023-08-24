@@ -21,8 +21,7 @@ class SklearnLogisticRegression(algorithms.Algo):
         # We need all different instances of the algorithm to have the same
         # initialization.
         self._model.coef_ = np.ones((OUTPUT_SIZE, INPUT_SIZE))
-        self._model.intercept_ = np.zeros(3)
-        self._model.classes_ = np.array([-1])
+        self._model.intercept_ = np.zeros(OUTPUT_SIZE)
 
         if seed is not None:
             np.random.seed(seed)

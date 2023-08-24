@@ -5,7 +5,7 @@ from substra_assets.dataset import setup_dataset
 # Data preparation #
 ####################
 
-NUM_DATA_PROVIDER = 2
+NUM_DATA_PROVIDER = 3
 _data_path = Path.cwd() / "demo_ml_data" / "data"
 
 if NUM_DATA_PROVIDER == 2:
@@ -85,7 +85,7 @@ from sklearn import linear_model
 
 SEED = 42
 
-cls = linear_model.LogisticRegression(random_state=SEED, warm_start=True, max_iter=3)
+cls = linear_model.LinearRegression()
 
 ###################################
 # SubstraFL FL objects definition #
@@ -115,3 +115,51 @@ train_data_nodes = [
     )
     for org_id in DATA_PROVIDER_ORGS_ID
 ]
+
+##########################
+# Running the experiment #
+##########################
+
+from substrafl.experiment import execute_experiment
+from substrafl.dependency import Dependency
+
+# Number of times to apply the compute plan.
+NUM_ROUNDS = 1
+
+dependencies = Dependency(
+    pypi_dependencies=["numpy==1.23.1", "scikit-learn==1.1.1"], local_code=[Path.cwd() / "substra_assets"]
+)
+
+compute_plan = execute_experiment(
+    client=clients[ALGO_ORG_ID],
+    strategy=strategy,
+    train_data_nodes=train_data_nodes,
+    evaluation_strategy=None,
+    aggregation_node=aggregation_node,
+    num_rounds=NUM_ROUNDS,
+    experiment_folder=str(Path.cwd() / "tmp" / "experiment_summaries"),
+    dependencies=dependencies,
+    name="IRIS documentation example",
+)
+
+
+####################
+# Download results #
+####################
+
+from substrafl.model_loading import download_algo_state
+
+client_to_download_from = DATA_PROVIDER_ORGS_ID[0]
+round_idx = None
+
+
+algo = download_algo_state(
+    client=clients[client_to_download_from],
+    compute_plan_key=compute_plan.key,
+    round_idx=round_idx,
+)
+
+cls = algo.model
+
+print("Coefs: ", cls.coef_)
+print("Intercepts: ", cls.intercept_)

@@ -152,6 +152,10 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# Substra
+
+tmp/**
+local_worker
 # EUCAIM
 
 demo_dl_data
