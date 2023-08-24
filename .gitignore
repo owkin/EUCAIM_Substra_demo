@@ -153,10 +153,10 @@ dmypy.json
 cython_debug/
 
 # Substra
-
 tmp/**
-local_worker
-# EUCAIM
+local-worker
+**/experiment_summaries
 
+# EUCAIM
 demo_dl_data
 demo_ml_data
