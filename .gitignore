@@ -160,3 +160,5 @@ local-worker
 # EUCAIM
 demo_dl_data
 demo_ml_data
+substra_data_2_split
+substra_data_3_split

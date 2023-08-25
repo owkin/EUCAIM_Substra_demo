@@ -1,11 +1,12 @@
-from pathlib import Path
-from substra_assets.dataset import setup_dataset
+NUM_DATA_PROVIDER = 2
 
 ####################
 # Data preparation #
 ####################
 
-NUM_DATA_PROVIDER = 2
+from pathlib import Path
+from substra_assets.dataset import setup_dataset
+
 _data_path = Path.cwd() / "demo_ml_data" / "data"
 
 if NUM_DATA_PROVIDER == 2:
