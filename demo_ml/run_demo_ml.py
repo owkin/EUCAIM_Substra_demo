@@ -5,7 +5,7 @@ from substra_assets.dataset import setup_dataset
 # Data preparation #
 ####################
 
-NUM_DATA_PROVIDER = 3
+NUM_DATA_PROVIDER = 2
 _data_path = Path.cwd() / "demo_ml_data" / "data"
 
 if NUM_DATA_PROVIDER == 2:
@@ -46,8 +46,8 @@ assets_directory = Path.cwd() / "substra_assets"
 permissions_dataset = Permissions(public=False, authorized_ids=[ALGO_ORG_ID])
 
 dataset = DatasetSpec(
-    name="Iris",
-    type="npy",
+    name="Rexposome",
+    type="csv",
     data_opener=assets_directory / "dataset" / "opener.py",
     description=assets_directory / "dataset" / "description.md",
     permissions=permissions_dataset,
@@ -127,7 +127,7 @@ from substrafl.dependency import Dependency
 NUM_ROUNDS = 1
 
 dependencies = Dependency(
-    pypi_dependencies=["numpy==1.23.1", "scikit-learn==1.1.1"], local_code=[Path.cwd() / "substra_assets"]
+    pypi_dependencies=["pandas==2.0.3", "scikit-learn==1.3.0"], local_code=[Path.cwd() / "substra_assets"]
 )
 
 compute_plan = execute_experiment(
@@ -139,7 +139,8 @@ compute_plan = execute_experiment(
     num_rounds=NUM_ROUNDS,
     experiment_folder=str(Path.cwd() / "tmp" / "experiment_summaries"),
     dependencies=dependencies,
-    name="IRIS documentation example",
+    name="EUCAIM demo ml",
+    clean_models=False,
 )
 
 
@@ -149,14 +150,13 @@ compute_plan = execute_experiment(
 
 from substrafl.model_loading import download_algo_state
 
-client_to_download_from = DATA_PROVIDER_ORGS_ID[0]
-round_idx = None
-
+# The results will be available once the compute plan is completed
+client_to_download_from = clients[DATA_PROVIDER_ORGS_ID[0]]
+client_to_download_from.wait_compute_plan(compute_plan.key)
 
 algo = download_algo_state(
-    client=clients[client_to_download_from],
+    client=client_to_download_from,
     compute_plan_key=compute_plan.key,
-    round_idx=round_idx,
 )
 
 cls = algo.model
