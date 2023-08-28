@@ -1,10 +1,17 @@
 from pathlib import Path
 import pandas as pd
 import shutil
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def extract_data(data_ids: Path, image_path: Path, destination_path: Path, n_org: int):
-    destination_path.mkdir(exist_ok=True)
+    try:
+        destination_path.mkdir(exist_ok=False)
+    except FileExistsError:
+        logger.warning(f"{destination_path} already exists. Skipping data extraction.")
+        return
 
     for i in range(n_org):
         (destination_path / f"org_{i+1}").mkdir(exist_ok=True)
