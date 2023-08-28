@@ -17,18 +17,18 @@ class Opener(tools.Opener):
 
         for image_path in p.iterdir():
             if image_path.name.startswith("NORMAL"):
-                label_db.append(0)
+                label_db.append([1, 0])
             elif image_path.name.startswith("PNEUMONIA"):
-                label_db.append(1)
+                label_db.append([0, 1])
             else:
                 raise Exception(
                     f"Illegal image name found: {image_path.name}. The image name must start with NORMAL or PNEUMONIA."
                 )
 
-            image = Image.open(image_path)
+            image = Image.open(image_path).resize((224, 224))
+            image = image.convert("RGB")
 
-            image_db.append(np.asarray(image))
-            breakpoint()
+            image_db.append(np.array(image))
 
         # load data
         data = {"data": image_db, "targets": label_db}
