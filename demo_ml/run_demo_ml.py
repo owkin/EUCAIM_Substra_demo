@@ -5,7 +5,7 @@ NUM_DATA_PROVIDER = 2
 ####################
 
 from pathlib import Path
-from substra_assets.dataset import setup_dataset
+from substra_ml_assets.dataset import setup_dataset
 
 _data_path = Path.cwd() / "demo_ml_data" / "data"
 
@@ -42,7 +42,7 @@ from substra.sdk.schemas import DatasetSpec
 from substra.sdk.schemas import Permissions
 from substra.sdk.schemas import DataSampleSpec
 
-assets_directory = Path.cwd() / "substra_assets"
+assets_directory = Path.cwd() / "substra_ml_assets"
 
 permissions_dataset = Permissions(public=False, authorized_ids=[ALGO_ORG_ID])
 
@@ -92,7 +92,7 @@ cls = linear_model.LinearRegression()
 # SubstraFL FL objects definition #
 ###################################
 
-from substra_assets.sklearn_algo import SklearnLogisticRegression
+from substra_ml_assets.sklearn_algo import SklearnLogisticRegression
 from substrafl.strategies import FedAvg
 
 strategy = FedAvg(algo=SklearnLogisticRegression(model=cls, seed=SEED))
@@ -128,7 +128,7 @@ from substrafl.dependency import Dependency
 NUM_ROUNDS = 1
 
 dependencies = Dependency(
-    pypi_dependencies=["pandas==2.0.3", "scikit-learn==1.3.0"], local_code=[Path.cwd() / "substra_assets"]
+    pypi_dependencies=["pandas==2.0.3", "scikit-learn==1.3.0"], local_code=[Path.cwd() / "substra_ml_assets"]
 )
 
 compute_plan = execute_experiment(
