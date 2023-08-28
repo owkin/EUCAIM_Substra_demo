@@ -1,7 +1,7 @@
 import pathlib
 import numpy as np
 import substratools as tools
-import pandas as pd
+from PIL import Image
 
 
 class Opener(tools.Opener):
@@ -11,14 +11,26 @@ class Opener(tools.Opener):
     def get_data(self, folders):
         # get npy files
         p = pathlib.Path(folders[0])
-        df = pd.read_csv(next(p.iterdir()))
 
-        df = df.dropna(subset=["PM25", "age", "sex", "cbmi", "blood_pre"])
+        image_db = []
+        label_db = []
 
-        df["sex"] = df["sex"].replace("female", 0)
-        df["sex"] = df["sex"].replace("male", 1)
+        for image_path in p.iterdir():
+            if image_path.name.startswith("NORMAL"):
+                label_db.append(0)
+            elif image_path.name.startswith("PNEUMONIA"):
+                label_db.append(1)
+            else:
+                raise Exception(
+                    f"Illegal image name found: {image_path.name}. The image name must start with NORMAL or PNEUMONIA."
+                )
+
+            image = Image.open(image_path)
+
+            image_db.append(np.asarray(image))
+            breakpoint()
 
         # load data
-        data = {"data": df[["PM25", "age", "sex", "cbmi"]].to_numpy(), "targets": df["blood_pre"].to_numpy()}
+        data = {"data": image_db, "targets": label_db}
 
         return data
