@@ -11,3 +11,7 @@ Data first extracted from: <https://github.com/isglobal-brge/rexposome/tree/mast
 Install the requirements: `pip install requirements.txt`
 
 Launch the demo: `python run_demo_ml.py`
+
+Args:
+
+- `--n-split` to trigger the 2 or 3 data provider context. Default to 2.

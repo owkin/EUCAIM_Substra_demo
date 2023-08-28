@@ -1,4 +1,23 @@
-NUM_DATA_PROVIDER = 2
+import argparse
+
+parser = argparse.ArgumentParser(prog="Demo DL EUCAIM")
+parser.add_argument(
+    "--n-split",
+    type=int,
+    default=2,
+    help="Number of data provider to work with for the demo.",
+)
+
+parser.add_argument(
+    "--n-round",
+    type=int,
+    default=5,
+    help="Number of round of the compute plan.",
+)
+
+args = parser.parse_args()
+
+NUM_DATA_PROVIDER = args.n_split
 
 ####################
 # Data preparation #
@@ -277,7 +296,7 @@ from substrafl.dependency import Dependency
 dependencies = Dependency(pypi_dependencies=["torch==2.0.1", "scikit-learn==1.3.0", "Pillow==10.0.0"])
 
 # A round is defined by a local training step followed by an aggregation operation
-NUM_ROUNDS = 5
+NUM_ROUNDS = args.n_round
 
 compute_plan = execute_experiment(
     client=clients[ALGO_ORG_ID],

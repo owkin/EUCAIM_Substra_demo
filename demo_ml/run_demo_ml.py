@@ -1,4 +1,16 @@
-NUM_DATA_PROVIDER = 2
+import argparse
+
+parser = argparse.ArgumentParser(prog="Demo DL EUCAIM")
+parser.add_argument(
+    "--n-split",
+    type=int,
+    default=2,
+    help="Number of data provider to work with for the demo.",
+)
+
+args = parser.parse_args()
+
+NUM_DATA_PROVIDER = args.n_split
 
 ####################
 # Data preparation #
