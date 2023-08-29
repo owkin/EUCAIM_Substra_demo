@@ -69,7 +69,6 @@ dataset = DatasetSpec(
 
 dataset_keys = {}
 train_datasample_keys = {}
-test_datasample_keys = {}
 
 for i, org_id in enumerate(DATA_PROVIDER_ORGS_ID):
     client = clients[org_id]
