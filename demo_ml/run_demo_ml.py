@@ -152,7 +152,7 @@ compute_plan = execute_experiment(
     num_rounds=NUM_ROUNDS,
     experiment_folder=str(Path.cwd() / "tmp" / "experiment_summaries"),
     dependencies=dependencies,
-    name="EUCAIM demo ml",
+    name=f"EUCAIM demo ML - {NUM_DATA_PROVIDER} split",
     clean_models=False,
 )
 
