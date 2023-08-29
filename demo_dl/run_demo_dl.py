@@ -60,10 +60,9 @@ if args.remote:
 else:
     config_file = None
 
-# We create 1 more client than the number of data provider
 clients_list = [Client(client_name=f"org-{i+1}", configuration_file=config_file) for i in range(NUM_DATA_PROVIDER)]
-breakpoint()
 clients = {client.organization_info().organization_id: client for client in clients_list}
+
 # Store organization IDs
 ORGS_ID = list(clients)
 ALGO_ORG_ID = ORGS_ID[0]  # Algo provider is defined as the first organization.
