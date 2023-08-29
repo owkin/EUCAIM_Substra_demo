@@ -11,7 +11,7 @@ parser.add_argument(
 parser.add_argument(
     "--n-split",
     type=int,
-    default=2,
+    default=3,
     help="Number of data provider to work with for the demo.",
 )
 
