@@ -69,7 +69,6 @@ dataset = DatasetSpec(
 
 dataset_keys = {}
 train_datasample_keys = {}
-test_datasample_keys = {}
 
 for i, org_id in enumerate(DATA_PROVIDER_ORGS_ID):
     client = clients[org_id]
@@ -137,7 +136,7 @@ from substrafl.experiment import execute_experiment
 from substrafl.dependency import Dependency
 
 # Number of times to apply the compute plan.
-NUM_ROUNDS = 1
+NUM_ROUNDS = 2
 
 dependencies = Dependency(
     pypi_dependencies=["pandas==2.0.3", "scikit-learn==1.3.0"], local_code=[Path.cwd() / "substra_ml_assets"]
