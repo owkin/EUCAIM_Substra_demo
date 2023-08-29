@@ -1,0 +1,12 @@
+org-1:
+  backend_type: remote
+  url: https://api.org-1.eucaim.cg.owkin.tech
+  username: eucaim
+org-2:
+  backend_type: remote
+  url: https://api.org-2.eucaim.cg.owkin.tech
+  username: eucaim
+org-3:
+  backend_type: remote
+  url: https://api.org-3.eucaim.cg.owkin.tech
+  username: eucaim

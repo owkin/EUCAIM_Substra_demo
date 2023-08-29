@@ -16,7 +16,14 @@ Launch the demo: `python run_demo_dl.py`
 
 Args:
 
+- `-r`, `--remote` to launch the compute remotely. Note that you need to set the `SUBSTRA_ORG_{num_org}_PASSWORD` env variables to be able to connect to each backend before being able to launch an experiment remotely. The config files are stored in the `config_files` folder. You can also access your compute plan on the frontend when launched remotely (see bellow for frontend urls). Use the same credentials to connect.
 - `--n-split` to trigger the 2 or 3 data provider context. Default to 2.
 - `--n-round` to choose the number of round of the compute plan. Default to 5.
 
 The script, if launched for the first time, will create a `substra_data_{NUM-DATA-PROVIDER}_split` to copy the image regarding the given split in the repo.
+
+Frontend urls:
+
+- <https://substra.org-1.eucaim.cg.owkin.tech/>
+- <https://substra.org-2.eucaim.cg.owkin.tech/>
+- <https://substra.org-3.eucaim.cg.owkin.tech/>

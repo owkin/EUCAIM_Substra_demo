@@ -2,6 +2,13 @@ import argparse
 
 parser = argparse.ArgumentParser(prog="Demo DL EUCAIM")
 parser.add_argument(
+    "-r",
+    "--remote",
+    action="store_true",
+    help="Client in remote mode.",
+)
+
+parser.add_argument(
     "--n-split",
     type=int,
     default=2,
@@ -36,14 +43,24 @@ setup_dataset.extract_data(data_path=DATA_PATH)
 
 from substra import Client
 
-# We create 1 more client than the number of data provider
-clients_list = [Client(client_name=f"org-{i+1}", backend_type="subprocess") for i in range(NUM_DATA_PROVIDER + 1)]
+if args.remote:
+    config_file = Path.cwd() / "config_files" / f"config-{NUM_DATA_PROVIDER}-client.yaml"
+else:
+    config_file = None
+
+clients_list = [Client(client_name=f"org-{i+1}", configuration_file=config_file) for i in range(NUM_DATA_PROVIDER)]
 clients = {client.organization_info().organization_id: client for client in clients_list}
 
 # Store organization IDs
 ORGS_ID = list(clients)
 ALGO_ORG_ID = ORGS_ID[0]  # Algo provider is defined as the first organization.
-DATA_PROVIDER_ORGS_ID = ORGS_ID[1:]  # Data provider orgs are the last two organizations.
+DATA_PROVIDER_ORGS_ID = ORGS_ID  # All organization provides data in this demo orgs are the last two organizations.
+
+
+# Store organization IDs
+ORGS_ID = list(clients)
+ALGO_ORG_ID = ORGS_ID[0]  # Algo provider is defined as the first organization.
+DATA_PROVIDER_ORGS_ID = ORGS_ID  # Data provider orgs are the last two organizations.
 
 
 #####################
