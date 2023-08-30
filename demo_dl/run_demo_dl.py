@@ -163,7 +163,7 @@ criterion = torch.nn.CrossEntropyLoss()
 from substrafl.index_generator import NpIndexGenerator
 
 # Number of model updates between each FL strategy aggregation.
-NUM_UPDATES = 100
+NUM_UPDATES = 20
 
 # Number of samples per update.
 BATCH_SIZE = 32
