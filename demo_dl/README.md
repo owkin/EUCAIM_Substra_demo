@@ -27,3 +27,12 @@ Frontend urls:
 - <https://substra.org-1.eucaim.cg.owkin.tech/>
 - <https://substra.org-2.eucaim.cg.owkin.tech/>
 - <https://substra.org-3.eucaim.cg.owkin.tech/>
+
+---
+**Note for remote mode:**
+
+To avoid registering the data at every compute plan, we take advantage of a cache system that stores the different keys of datasets and datasamples after a remote registration. These keys are stored in the `susbtra_dl_assets/dataset/cache_keys` folder.
+
+To relaunch the registration, simply delete these files. A new one will be generated with new keys and the data will be re-registered.
+
+---
