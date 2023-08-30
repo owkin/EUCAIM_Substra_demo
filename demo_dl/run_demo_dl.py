@@ -72,48 +72,21 @@ DATA_PROVIDER_ORGS_ID = ORGS_ID  # All organization provides data in this demo o
 # Data registration #
 #####################
 
-from substra.sdk.schemas import DatasetSpec
+from substra_dl_assets.dataset.register_dataset import register_dataset
+
 from substra.sdk.schemas import Permissions
-from substra.sdk.schemas import DataSampleSpec
 
-assets_directory = Path.cwd() / "substra_dl_assets"
-dataset_keys = {}
-train_datasample_keys = {}
-test_datasample_keys = {}
+permissions_dataset = Permissions(public=False, authorized_ids=[ALGO_ORG_ID])
 
-for i, org_id in enumerate(DATA_PROVIDER_ORGS_ID):
-    client = clients[org_id]
-
-    permissions_dataset = Permissions(public=False, authorized_ids=[ALGO_ORG_ID])
-
-    # DatasetSpec is the specification of a dataset. It makes sure every field
-    # is well-defined, and that our dataset is ready to be registered.
-    # The real dataset object is created in the add_dataset method.
-
-    dataset = DatasetSpec(
-        name="Chest X-ray",
-        type="jpeg",
-        data_opener=assets_directory / "dataset" / "opener.py",
-        description=assets_directory / "dataset" / "description.md",
-        permissions=permissions_dataset,
-        logs_permission=permissions_dataset,
-    )
-    dataset_keys[org_id] = client.add_dataset(dataset)
-    assert dataset_keys[org_id], "Dataset key"
-
-    # Add the training data on each organization.
-    data_sample = DataSampleSpec(
-        data_manager_keys=[dataset_keys[org_id]],
-        path=SUBSTRA_DATA_PATH / f"org_{i+1}" / "train",
-    )
-    train_datasample_keys[org_id] = client.add_data_sample(data_sample)
-
-    # Add the testing data on each organization.
-    data_sample = DataSampleSpec(
-        data_manager_keys=[dataset_keys[org_id]],
-        path=SUBSTRA_DATA_PATH / f"org_{i+1}" / "test",
-    )
-    test_datasample_keys[org_id] = client.add_data_sample(data_sample)
+dataset_keys, train_datasample_keys, test_datasample_keys = register_dataset(
+    permissions=permissions_dataset,
+    clients=clients,
+    orgs_id=DATA_PROVIDER_ORGS_ID,
+    data_path=SUBSTRA_DATA_PATH,
+    asset_path=Path.cwd() / "substra_dl_assets" / "dataset",
+    num_data_provider=NUM_DATA_PROVIDER,
+    use_cache=args.remote,
+)
 
 ######################
 # Metrics definition #

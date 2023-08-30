@@ -11,4 +11,4 @@ def extract_data(data_path: Path):
             file_found = True
 
     if not file_found:
-        logger.info(f"{data_path} seems already extracted. Skipping data extraction.")
+        logger.info(f"{data_path.name} seems already extracted. Skipping data extraction.")
