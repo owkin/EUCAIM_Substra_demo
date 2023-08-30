@@ -38,6 +38,8 @@ def register_dataset(
                 for org_id in orgs_id:
                     clients[org_id].get_dataset(dataset_keys[org_id])
 
+                logger.info("Keys from cache successfully used. Skipping data registration.")
+
                 return dataset_keys, train_datasample_keys, test_datasample_keys
 
             except NotFound:
